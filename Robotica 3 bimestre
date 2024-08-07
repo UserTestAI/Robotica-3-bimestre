@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Variáveis de configuração
+REPO_NAME="jogos-populares-por-genero"
+GITHUB_USERNAME="seu_usuario_github"
+GITHUB_REPO_URL="https://github.com/${GITHUB_USERNAME}/${REPO_NAME}.git"
+
+# Criação do repositório no GitHub
+curl -u ${GITHUB_USERNAME} https://api.github.com/user/repos -d '{"name":"'${REPO_NAME}'"}'
+
+# Clonar o repositório para o seu computador
+git clone ${GITHUB_REPO_URL}
+cd ${REPO_NAME}
+
+# Criar diretórios para cada gênero de jogo
+mkdir FPS RPG Aventura
+
+# Adicionar informações sobre jogos populares em cada gênero
+cat <<EOF > FPS/jogos.md
+# Jogos Populares de FPS
+
+- Call of Duty
+- Counter-Strike
+- Battlefield
+EOF
+
+cat <<EOF > RPG/jogos.md
+# Jogos Populares de RPG
+
+- The Elder Scrolls V: Skyrim
+- Dark Souls
+- Final Fantasy VII
+EOF
+
+cat <<EOF > Aventura/jogos.md
+# Jogos Populares de Aventura
+
+- The Legend of Zelda: Breath of the Wild
+- Uncharted 4: A Thief's End
+- Tomb Raider
+EOF
+
+# Adicionar e commit inicial
+git add .
+git commit -m "Adiciona informações sobre gêneros de jogos e jogos populares"
+
+# Enviar para o repositório remoto
+git push origin main
+
+echo "Configuração inicial concluída e informações adicionadas ao repositório remoto."
